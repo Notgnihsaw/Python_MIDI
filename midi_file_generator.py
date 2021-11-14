@@ -77,9 +77,9 @@ def parse_note_string(note):
     return note_name, accidental, octave
 
 def generate_note_messages(note_number, start_time, duration):
-    note_on_msg = Message('note_on', note=note_number, time=start_time)
+    note_on_msg = Message('note_on', note=note_number, time=duration)
     note_off_msg = Message('note_off', note=note_number, time=start_time + duration)
-    return note_on_msg, note_off_msg
+    return (note_on_msg, note_off_msg)
 
 def message_to_MIDI_file(message):
     mid = MidiFile()

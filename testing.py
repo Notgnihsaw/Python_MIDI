@@ -29,7 +29,7 @@ class MIDIFileTest(unittest.TestCase):
     def test_generate_note_messages(self):
         results = midi_file_generator.generate_note_messages(60, 0, 1)
         #generating a C4 for 1 second. 
-        self.assertEqual(results[0], mido.Message('note_on', note=60, time=0))
+        self.assertEqual(results[0], mido.Message('note_on', note=60, time=1))
         self.assertEqual(results[1], mido.Message('note_off', note=60, time=1))
 
 class MIDIPlayerTest(unittest.TestCase):
@@ -41,10 +41,16 @@ class MIDIPlayerTest(unittest.TestCase):
         midi_player.play_music('Python_MIDI/MIDI_output_files/MIDI_test_sample.mid')
     
     #@unittest.skip
-    def test_play_A440(self):
-        a_440 = midi_file_generator.message_to_MIDI_file(midi_file_generator.generate_note_messages(69, 0, 1))
-    
-        midi_player.play_mido_MIDI(a_440)
+    def test_play_C4(self):
+        c4_midi_messages = midi_file_generator.generate_note_messages(60, 0, 512)
+        #print(c4_midi_messages[0])
+        #print(c4_midi_messages[1])
+
+        c4_midi_track = midi_file_generator.messages_to_MIDI_file([c4_midi_messages[0], c4_midi_messages[1]])
+        #print(c4_midi_track)
+
+        midi_player.play_mido_MIDI(c4_midi_track)
+        
 
 
 if __name__ == '__main__':
