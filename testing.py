@@ -1,6 +1,6 @@
 import unittest, mido
 
-import midi_file_generator
+import midi_file_generator, midi_player
 
 #print(midi_file_generator.generate_A440())
 
@@ -31,7 +31,21 @@ class MIDIFileTest(unittest.TestCase):
         #generating a C4 for 1 second. 
         self.assertEqual(results[0], mido.Message('note_on', note=60, time=0))
         self.assertEqual(results[1], mido.Message('note_off', note=60, time=1))
+
+class MIDIPlayerTest(unittest.TestCase):
+
+    @unittest.skip('already tested')
+    def test_play_sample_MIDI(self):
+        mid = mido.MidiFile('Python_MIDI/MIDI_output_files/MIDI_test_sample.mid')
+
+        midi_player.play_music('Python_MIDI/MIDI_output_files/MIDI_test_sample.mid')
     
+    #@unittest.skip
+    def test_play_A440(self):
+        a_440 = midi_file_generator.message_to_MIDI_file(midi_file_generator.generate_note_messages(69, 0, 1))
+    
+        midi_player.play_mido_MIDI(a_440)
+
 
 if __name__ == '__main__':
     unittest.main()
