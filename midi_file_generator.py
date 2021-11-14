@@ -13,7 +13,7 @@ def note_to_MIDI_number(note, accidental, octave):
 
     note = note.upper()
 
-    if octave >= -1 and octave < 9:
+    if octave >= -1 and octave <= 9:
         # Parses note name
         if note == "C":
             midi_number = 0
@@ -43,7 +43,12 @@ def note_to_MIDI_number(note, accidental, octave):
             return -1
 
         # scales by octave
-        midi_number += (octave * 12)
+        midi_number += ((octave + 1)* 12)
+
+        if (midi_number <= 127) and (midi_number >= 0):
+            return midi_number
+        else:
+            return -1
     else:
         return -1
 
@@ -83,12 +88,12 @@ def generate_A440():
 # generates a major scale
 def generate_major_scale(root_note, duration):
     major_semitones = (2, 2, 1, 2, 2, 2, 1)
-    generate_scale(major_semitones, root_note, duration)
+    return generate_scale(major_semitones, root_note, duration)
 
 # generates a major pentatonic scale
 def generate_maj_pentatonic_scale(root_note, duration):
     semitones = (2, 2, 3, 2, 3)
-    generate_scale(semitones, root_note, duration)
+    return generate_scale(semitones, root_note, duration)
 
 # generates an arbitrary scale based on a sequence of semitones. 
 # the root note is the MIDI number of the root note of the scale.

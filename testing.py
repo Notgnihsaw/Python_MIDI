@@ -11,6 +11,27 @@ class MIDIFileTest(unittest.TestCase):
         self.assertEqual(midi_file_generator.parse_note_string("Bb-1"), ('B', 'b', -1))
         self.assertEqual(midi_file_generator.parse_note_string("D#9"), ('D', '#', 9))
         self.assertEqual(midi_file_generator.parse_note_string("C#4"), ('C', '#', 4))
+    
+    def test_note_to_MIDI_number(self):
+        self.assertEqual(midi_file_generator.note_to_MIDI_number('C', 'n', -1), 0)
+        self.assertEqual(midi_file_generator.note_to_MIDI_number('C', 'n', -2), -1)
+        self.assertEqual(midi_file_generator.note_to_MIDI_number('C', 'n', 9), 120)
+        self.assertEqual(midi_file_generator.note_to_MIDI_number('C', '#', -1), 1)
+        self.assertEqual(midi_file_generator.note_to_MIDI_number('B', 'b', -1), 10)
+        self.assertEqual(midi_file_generator.note_to_MIDI_number('B', 'n', -1), 11)
+        self.assertEqual(midi_file_generator.note_to_MIDI_number('C', 'n', 4), 60)
+        self.assertEqual(midi_file_generator.note_to_MIDI_number('A', 'n', 4), 69)
+    
+    def test_generate_A440(self):
+        msg = mido.Message('note_on', note=69, time=0)
+        self.assertEqual(msg, midi_file_generator.generate_A440())
+    
+    def test_generate_note_messages(self):
+        results = midi_file_generator.generate_note_messages(60, 0, 1)
+        #generating a C4 for 1 second. 
+        self.assertEqual(results[0], mido.Message('note_on', note=60, time=0))
+        self.assertEqual(results[1], mido.Message('note_off', note=60, time=1))
+    
 
 if __name__ == '__main__':
     unittest.main()
