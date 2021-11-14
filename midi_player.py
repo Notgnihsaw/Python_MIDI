@@ -47,5 +47,5 @@ def play_music(midi_filename):
   while pygame.mixer.music.get_busy():
     clock.tick(30) # check if playback has finished
   
-  pygame.mixer.quit()
-  sys.exit()
+  #pygame.mixer.quit()
+  #sys.exit()
