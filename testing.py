@@ -40,7 +40,7 @@ class MIDIPlayerTest(unittest.TestCase):
 
         midi_player.play_music('Python_MIDI/MIDI_output_files/MIDI_test_sample.mid')
     
-    #@unittest.skip
+    @unittest.skip
     def test_play_C4(self):
         c4_midi_messages = midi_file_generator.generate_note_messages(60, 0, 512)
         #print(c4_midi_messages[0])
@@ -51,7 +51,17 @@ class MIDIPlayerTest(unittest.TestCase):
 
         #print("playing midi")
         midi_player.play_mido_MIDI(c4_midi_track)
-        
+    
+    @unittest.skip
+    def test_play_pent_scale(self):
+        c_pent_scale = midi_file_generator.generate_maj_pentatonic_scale(60, 256)
+
+        midi_player.play_mido_MIDI(c_pent_scale)
+
+    def test_play_maj_scale(self):
+        c_maj_scale = midi_file_generator.generate_major_scale(60, 256)
+
+        midi_player.play_mido_MIDI(c_maj_scale)
         
 
 

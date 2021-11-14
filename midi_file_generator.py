@@ -108,12 +108,12 @@ def generate_A440():
 
 # generates a major scale
 def generate_major_scale(root_note, duration):
-    major_semitones = (2, 2, 1, 2, 2, 2, 1)
+    major_semitones = (2, 2, 1, 2, 2, 2, 1, 0)
     return generate_scale(major_semitones, root_note, duration)
 
 # generates a major pentatonic scale
 def generate_maj_pentatonic_scale(root_note, duration):
-    semitones = (2, 2, 3, 2, 3)
+    semitones = (2, 2, 3, 2, 3, 0)
     return generate_scale(semitones, root_note, duration)
 
 # generates an arbitrary scale based on a sequence of semitones. 
@@ -125,12 +125,16 @@ def generate_scale(semitone_sequence, root_note, duration):
     mid.tracks.append(track)
 
     time = 0
+    semitones_so_far = root_note
 
     #iterates through the semitone sequence and adds the note to the MIDI sequence.
     for semitones in semitone_sequence:
         # using extend because generate_note_messages returns two outputs.
         # semitones represents the semitones from the root note to go up
-        track.extend(generate_note_messages(root_note + semitones, time + duration, duration))
+        track.extend(generate_note_messages(semitones_so_far, duration, duration))
         time += duration
+        semitones_so_far += semitones
+    
+    track.append(mido.MetaMessage('end_of_track', time = 0))
     
     return mid
