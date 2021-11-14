@@ -81,6 +81,27 @@ def generate_note_messages(note_number, start_time, duration):
     note_off_msg = Message('note_off', note=note_number, time=start_time + duration)
     return note_on_msg, note_off_msg
 
+def message_to_MIDI_file(message):
+    mid = MidiFile()
+    track = MidiTrack()
+    mid.tracks.append(track)
+
+    track.append(message)
+
+    track.append(mido.MetaMessage('end_of_track', time = 0))
+    return mid
+
+def messages_to_MIDI_file(messages):
+    mid = MidiFile()
+    track = MidiTrack()
+    mid.tracks.append(track)
+
+    for message in messages:
+        track.append(message)
+
+    track.append(mido.MetaMessage('end_of_track', time = 0))
+    return mid
+
 def generate_A440():
     msg = mido.Message('note_on', note=69, time=0)
     return msg
