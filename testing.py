@@ -36,7 +36,7 @@ class MIDIPlayerTest(unittest.TestCase):
 
     @unittest.skip('already tested')
     def test_play_sample_MIDI(self):
-        mid = mido.MidiFile('Python_MIDI/MIDI_output_files/MIDI_test_sample.mid')
+        #mid = mido.MidiFile('Python_MIDI/MIDI_output_files/MIDI_test_sample.mid')
 
         midi_player.play_music('Python_MIDI/MIDI_output_files/MIDI_test_sample.mid')
     
@@ -49,7 +49,9 @@ class MIDIPlayerTest(unittest.TestCase):
         c4_midi_track = midi_file_generator.messages_to_MIDI_file([c4_midi_messages[0], c4_midi_messages[1]])
         #print(c4_midi_track)
 
+        #print("playing midi")
         midi_player.play_mido_MIDI(c4_midi_track)
+        
         
 
 
